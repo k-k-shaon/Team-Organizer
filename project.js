@@ -63,20 +63,31 @@ let displayplayer =(player)=>{
             addteam(element);
         });
 
-        
         div.querySelector(".details-button").addEventListener("click", () => {
-            alert(
-                `Name: ${element.strPlayer}\n` +
-                `Team: ${element.strTeam}\n` +
-                `Sport: ${element.strSport}\n` +
-                `Gender: ${element.strGender}\n` +
-                `Position: ${element.strPosition}\n` +
-                `Nationality: ${element.strNationality}\n` +
-                `Birth Date: ${element.dateBorn || 'N/A'}\n` +
-                `Relevance: ${element.relevance}\n` +
-                `Description:\n${element.strDescriptionEN || 'No description available in API'}`
-            );
+            fetch(`https://www.thesportsdb.com/api/v1/json/3/lookupplayer.php?id=${element.idPlayer}`)
+                .then(res => res.json())
+                .then(data => {
+                    const player = data.players[0];
+
+                    alert(
+                        `Name: ${player.strPlayer}\n` +
+                        `Team: ${player.strTeam}\n` +
+                        `Sport: ${player.strSport}\n` +
+                        `Gender: ${player.strGender}\n` +
+                        `Position: ${player.strPosition}\n` +
+                        `Nationality: ${player.strNationality}\n` +
+                        `Birth Date: ${player.dateBorn || 'N/A'}\n` +
+                        `Height: ${player.strHeight || 'N/A'}\n` +
+                        `Weight: ${player.strWeight || 'N/A'}\n` +
+                        `Description:\n${player.strDescriptionEN || 'No description available in API'}`
+                    );
+                })
+                .catch(error => {
+                    console.error('Error fetching details:', error);
+                    alert('Failed to load player details.');
+                });
         });
+
 
 
         container.appendChild(div);
