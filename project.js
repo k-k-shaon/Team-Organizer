@@ -9,7 +9,7 @@ let search_player=()=>{
 }
 
 let handlesearch = (search_name) => {
-    fetch(`https://www.thesportsdb.com/api/v1/json/123/searchplayers.php?p=${search_name}`)
+    fetch(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${search_name}`)
         .then((res) => res.json())
         .then((data) => {
             if (data.player) {
